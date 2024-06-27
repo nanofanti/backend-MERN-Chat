@@ -2,6 +2,7 @@ const User = require("../schemas/User");
 const bcrypt = require("bcrypt");
 const { createTokenAndSetCookie } = require("../utils/generateToken");
 
+//SIGN UP
 const createUser = async (req, res) => {
   try {
     const {
@@ -53,8 +54,47 @@ const createUser = async (req, res) => {
       res.status(400).json({ error: "Invalid user data" });
     }
   } catch (error) {
-    console.error("Error creating user:", error);
+    console.error("Error in sign up controller:", error);
   }
 };
 
-module.exports = { createUser };
+//LOG IN
+const logIn = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      throw Error("Username incorrect or does not exist");
+    }
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      user?.password || ""
+    );
+
+    if (!isPasswordCorrect) {
+      throw Error("Incorrect password");
+    }
+
+    createTokenAndSetCookie(user._id, res);
+
+    res.status(201).json({ message: "Logged in successfully!", data: user });
+  } catch (error) {
+    console.error("Error in log in controller:", error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//LOG OUT
+const logOut = (req, res) => {
+  try {
+    //TO CLEAR TO COOKIES
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.error("Error in log out controller:", error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = { createUser, logIn, logOut };

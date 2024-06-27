@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const connectDB = require("./dbinit");
+// const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const user = require("./routes/userRoute");
 connectDB();
@@ -9,6 +10,8 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+// app.use(cookieParser());
+
 app.use("/user", user);
 
 //BASIC ROUTING
