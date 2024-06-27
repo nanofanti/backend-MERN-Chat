@@ -3,12 +3,13 @@ const cors = require("cors");
 const app = express();
 const connectDB = require("./dbinit");
 require("dotenv").config();
-
+const user = require("./routes/userRoute");
+connectDB();
 //MIDDLEWARES
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-connectDB();
+app.use("/user", user);
 
 //BASIC ROUTING
 app.get("/", (req, res) => {
