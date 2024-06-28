@@ -11,9 +11,15 @@ const getMessages = async (req, res) => {
       participants: {
         $all: [senderId, userToChatId],
       },
-    }).populate("messages");
+    }).populate("messages"); //not reference, but actual messages
 
-    res.status(200).json(conversation.messages);
+    if (!conversation) {
+      return res.status(200).json([]);
+    }
+
+    const messages = conversation.messages;
+
+    res.status(200).json(messages);
   } catch (error) {
     console.error("Error in get messages controller:", error);
     res.status(400).json({ error: error.message });

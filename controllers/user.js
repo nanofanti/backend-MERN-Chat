@@ -97,4 +97,20 @@ const logOut = (req, res) => {
   }
 };
 
-module.exports = { createUser, logIn, logOut };
+//GET ALL USERS
+const getUsersForSidebar = async (req, res) => {
+  try {
+    const loggedInUserId = req.user._id;
+    //Find allUsers except the one who has the same _id as the user who's logged in
+    const allUsersExceptLoggedIn = await User.find({
+      _id: { $ne: loggedInUserId },
+    }).select("-password");
+
+    res.status(200).json(allUsersExceptLoggedIn);
+  } catch (error) {
+    console.error("Error in getUsersForSidebar controller:", error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = { createUser, logIn, logOut, getUsersForSidebar };
