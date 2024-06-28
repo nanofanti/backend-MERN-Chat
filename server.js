@@ -2,17 +2,24 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const connectDB = require("./dbinit");
-// const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
+
+//ROUTES IMPORT
 const user = require("./routes/userRoute");
+const message = require("./routes/messageRoute");
+
 connectDB();
 //MIDDLEWARES
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
+app.use(cookieParser());
 
+//USER
 app.use("/user", user);
+app.use("/messages", message);
+//MESSAGE
 
 //BASIC ROUTING
 app.get("/", (req, res) => {
