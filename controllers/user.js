@@ -77,7 +77,7 @@ const logIn = async (req, res) => {
     }
 
     createTokenAndSetCookie(user._id, res);
-
+    console.log(res.cookie.jwt);
     res.status(201).json({ message: "Logged in successfully!", data: user });
   } catch (error) {
     console.error("Error in log in controller:", error);
