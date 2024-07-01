@@ -62,7 +62,7 @@ const sendMessage = async (req, res) => {
     //Another way, but quicker because both will run in parallel
     await Promise.all([conversation.save(), newMessage.save()]);
 
-    res.status(201).json({ newMessage });
+    res.status(201).json(newMessage);
   } catch (error) {
     console.error("Error in send message controller:", error);
     res.status(400).json({ error: error.message });
