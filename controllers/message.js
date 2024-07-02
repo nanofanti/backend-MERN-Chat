@@ -65,7 +65,7 @@ const sendMessage = async (req, res) => {
 
     //SOCKET IO
     const receiverSocketId = getReceiverSocketId(receiverId);
-    if (receiverId) {
+    if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
 
