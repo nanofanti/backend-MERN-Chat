@@ -3,11 +3,12 @@ const cors = require("cors");
 const connectDB = require("./dbinit");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
-connectDB();
 
 //ROUTES IMPORT
 const user = require("./routes/userRoute");
 const message = require("./routes/messageRoute");
+
+connectDB();
 const { app, httpServer } = require("./socket/socket");
 
 //MIDDLEWARES
@@ -16,7 +17,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://nano-mernchatapp.netlify.app", // or your frontend URL
+    origin: "https://nano-mernchatapp.netlify.app",
     credentials: true,
   })
 );
