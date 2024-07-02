@@ -47,9 +47,7 @@ const createUser = async (req, res) => {
       //Generate JWT Token
       createTokenAndSetCookie(newUser._id, res);
       await newUser.save();
-      res
-        .status(201)
-        .json({ message: "User created successfully!", data: newUser });
+      res.status(201).json({ newUser });
     } else {
       res.status(400).json({ error: "Invalid user data" });
     }
@@ -77,8 +75,8 @@ const logIn = async (req, res) => {
     }
 
     createTokenAndSetCookie(user._id, res);
-    console.log(res.cookie.jwt);
-    res.status(201).json({ message: "Logged in successfully!", data: user });
+
+    res.status(201).json({ data: user });
   } catch (error) {
     console.error("Error in log in controller:", error);
     res.status(400).json({ error: error.message });

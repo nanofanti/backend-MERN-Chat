@@ -1,15 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-const app = express();
 const connectDB = require("./dbinit");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
+connectDB();
 
 //ROUTES IMPORT
 const user = require("./routes/userRoute");
 const message = require("./routes/messageRoute");
+const { app, httpServer } = require("./socket/socket");
 
-connectDB();
 //MIDDLEWARES
 app.use(express.json());
 app.use(cookieParser());
@@ -20,6 +20,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.urlencoded({ extended: true }));
 
 //USER

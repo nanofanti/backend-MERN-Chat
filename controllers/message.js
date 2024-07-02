@@ -1,5 +1,6 @@
 const Message = require("../schemas/Message");
 const Conversation = require("../schemas/Conversation");
+const { getReceiverSocketId, io } = require("../socket/socket");
 
 //GET MESSAGES
 const getMessages = async (req, res) => {
@@ -61,6 +62,12 @@ const sendMessage = async (req, res) => {
 
     //Another way, but quicker because both will run in parallel
     await Promise.all([conversation.save(), newMessage.save()]);
+
+    //SOCKET IO
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
 
     res.status(201).json(newMessage);
   } catch (error) {
