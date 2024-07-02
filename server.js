@@ -34,8 +34,8 @@ app.get("/", (req, res) => {
   res.send("Welcome to the MERNChatAPI");
 });
 
-const PORT = process.env.PORT || 8080;
+const APP_PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(APP_PORT, () => {
+  console.log(`Server running on http://localhost:${APP_PORT}`);
 });

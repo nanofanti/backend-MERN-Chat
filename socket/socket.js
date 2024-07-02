@@ -14,11 +14,11 @@ const io = new Server(httpServer, {
   },
 });
 
+const userSocketMap = {};
+
 const getReceiverSocketId = (receiverId) => {
   return userSocketMap[receiverId];
 };
-
-const userSocketMap = {};
 
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
@@ -35,11 +35,10 @@ io.on("connection", (socket) => {
     delete userSocketMap[userId];
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
-
-  const PORT = process.env.PORT || 3000;
-  httpServer.listen(PORT, () => {
-    console.log(`Server and Socket running on http://localhost:${PORT}`);
-  });
+});
+const PORT = process.env.PORT || 3000;
+httpServer.listen(PORT, () => {
+  console.log(`Server and Socket running on http://localhost:${PORT}`);
 });
 
 module.exports = { app, io, httpServer, getReceiverSocketId };
