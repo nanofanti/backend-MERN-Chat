@@ -8,7 +8,7 @@ const httpServer = http.createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://nano-mernchatapp.netlify.app",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -36,10 +36,10 @@ io.on("connection", (socket) => {
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
 
-  // const PORT = process.env.PORT || 8080;
-  // httpServer.listen(PORT, () => {
-  //   console.log(`Server and Socket running on http://localhost:${PORT}`);
-  // });
+  const PORT = process.env.PORT || 3000;
+  httpServer.listen(PORT, () => {
+    console.log(`Server and Socket running on http://localhost:${PORT}`);
+  });
 });
 
 module.exports = { app, io, httpServer, getReceiverSocketId };
