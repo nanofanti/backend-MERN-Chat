@@ -15,7 +15,8 @@ const { app, httpServer } = require("./socket/socket");
 app.use(
   cors({
     origin: "https://nanomernchatapp.netlify.app",
-    credentials: true,
+    methods: ["GET", "POST"], // Allow the methods used by your API
+    credentials: true, // Allow credentials (cookies)
   })
 );
 
