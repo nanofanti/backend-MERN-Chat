@@ -12,15 +12,15 @@ connectDB();
 const { app, httpServer } = require("./socket/socket");
 
 //MIDDLEWARES
-app.use(express.json());
-app.use(cookieParser());
-
 app.use(
   cors({
     origin: "https://nanomernchatapp.netlify.app",
     credentials: true,
   })
 );
+
+app.use(express.json());
+app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 
