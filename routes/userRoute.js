@@ -16,6 +16,6 @@ api.route("/login").post(logIn);
 
 api.route("/logout").post(logOut);
 
-api.route("/users").get(protectRoute, getUsersForSidebar);
+api.route("/users").get(getUsersForSidebar);
 
 module.exports = api;
