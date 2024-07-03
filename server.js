@@ -14,7 +14,7 @@ const { app, httpServer } = require("./socket/socket");
 //MIDDLEWARES
 app.use(
   cors({
-    origin: "https://nanomernchatapp.netlify.app",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"], // Allow the methods used by your API
     credentials: true, // Allow credentials (cookies)
   })
@@ -30,6 +30,10 @@ app.use("/user", user);
 app.use("/messages", message);
 //MESSAGE
 
+const PORT = process.env.PORT || 8080;
+httpServer.listen(PORT, () => {
+  console.log(`Server and Socket running on http://localhost:${PORT}`);
+});
 //BASIC ROUTING
 app.get("/", (req, res) => {
   res.send("Welcome to the MERNChatAPI");

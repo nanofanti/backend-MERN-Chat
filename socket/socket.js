@@ -8,7 +8,7 @@ const httpServer = http.createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://nanomernchatapp.netlify.app",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -35,11 +35,6 @@ io.on("connection", (socket) => {
     delete userSocketMap[userId];
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
-});
-
-const PORT = process.env.PORT || 8080;
-httpServer.listen(PORT, () => {
-  console.log(`Server and Socket running on http://localhost:${PORT}`);
 });
 
 module.exports = { app, io, httpServer, getReceiverSocketId };

@@ -47,7 +47,7 @@ const createUser = async (req, res) => {
       //Generate JWT Token
       createTokenAndSetCookie(newUser._id, res);
       await newUser.save();
-      res.status(201).json({ newUser });
+      res.status(201).json(newUser);
     } else {
       res.status(400).json({ error: "Invalid user data" });
     }
